@@ -1,0 +1,14 @@
+{
+  "name": "yagami-bousai-map",
+  "private": true,
+  "type": "module",
+  "description": "矢上小 防災行動マップ（公開版）。サイト本体はビルド不要の静的ファイル。ここにあるのは手元で確かめる・QRコードを作るための道具だけ",
+  "scripts": {
+    "serve": "node tools/serve.mjs",
+    "qr": "node tools/make_qr.mjs",
+    "check": "node tools/check_site.mjs"
+  },
+  "devDependencies": {
+    "qrcode": "1.5.4"
+  }
+}

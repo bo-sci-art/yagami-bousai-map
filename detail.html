@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>作品 | 矢上小 防災行動マップ</title>
+  <meta name="theme-color" content="#ffffff">
+  <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/app.css?v=1">
+</head>
+<body class="page-detail">
+
+  <header class="app-header">
+    <a class="back-link" id="back-link" href="index.html">＜ マップ</a>
+    <a class="ws-btn" href="workshop.html" data-ws hidden>WSに参加する</a>
+  </header>
+
+  <main class="detail" id="detail">
+    <p class="list-msg" id="detail-msg">作品を読み込んでいます…</p>
+
+    <article id="art" hidden>
+      <figure class="art-figure">
+        <img id="art-image" alt="">
+      </figure>
+
+      <h1 class="art-heading" id="art-title"></h1>
+
+      <section class="card" id="body-card">
+        <h2 class="card-head">この作品で伝えたいこと</h2>
+        <p class="art-body" id="art-body"></p>
+      </section>
+
+      <section class="card">
+        <h2 class="card-head">作品の情報</h2>
+        <dl class="facts">
+          <dt>場所</dt><dd id="art-place"></dd>
+          <dt>災害</dt><dd id="art-hazards"></dd>
+          <dt>いつの行動</dt><dd id="art-phase"></dd>
+          <dt>番号</dt><dd class="num" id="art-number"></dd>
+        </dl>
+      </section>
+
+      <section class="card">
+        <h2 class="card-head">この場所の危険性を見る</h2>
+        <div class="hz-tools" id="hz-tools"></div>
+        <div id="detail-map" class="detail-map"></div>
+      </section>
+
+      <nav class="pager" aria-label="ほかの作品">
+        <a class="pager-btn" id="prev-btn">◀ 前の作品</a>
+        <span class="pager-pos" id="nav-pos"></span>
+        <a class="pager-btn" id="next-btn">次の作品 ▶</a>
+      </nav>
+
+      <aside class="ws-hint" data-ws hidden>
+        <p>この作品のような防災アートを、親子で一緒につくってみませんか？</p>
+        <a href="workshop.html"><span data-ws-field="date"></span>のワークショップの案内を見る ›</a>
+      </aside>
+    </article>
+  </main>
+
+  <script src="assets/vendor/leaflet/leaflet.js"></script>
+  <script src="js/common.js?v=1"></script>
+  <script src="js/detail.js?v=1"></script>
+</body>
+</html>

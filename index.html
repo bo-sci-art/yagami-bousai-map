@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>矢上小 防災行動マップ</title>
+  <meta name="description" content="矢上小学校4年2組の子どもたちが、ハザードマップを読んでつくった防災アートの地図です。">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/app.css?v=1">
+</head>
+<body class="page-map">
+
+  <header class="app-header">
+    <h1 class="app-title">矢上小 防災行動マップ</h1>
+    <a class="ws-btn" href="workshop.html" data-ws hidden>WSに参加する</a>
+  </header>
+
+  <main class="map-layout">
+    <section class="map-pane" aria-label="地図">
+      <div id="map"></div>
+      <button type="button" class="map-ctl map-hazard-btn" id="hazard-btn">ハザードマップ</button>
+      <div class="map-ctl map-base" role="group" aria-label="地図の種類">
+        <button type="button" class="active" data-base="white">地図</button>
+        <button type="button" data-base="sat">写真</button>
+      </div>
+    </section>
+
+    <section class="list-pane" id="list-pane" aria-label="作品の一覧">
+      <div class="place-chips" id="place-chips" role="group" aria-label="場所を選ぶ"></div>
+      <div class="search-row">
+        <input type="search" id="search" class="search-input" inputmode="search" autocomplete="off"
+               placeholder="番号（例 4201）かタイトルで探す" aria-label="番号かタイトルで探す">
+        <button type="button" class="filter-btn" id="filter-btn" aria-haspopup="dialog">絞り込み<span class="filter-count" id="filter-count" hidden></span></button>
+      </div>
+      <div class="list-head"><span id="list-title">すべての場所</span><span class="list-count" id="list-count"></span></div>
+      <div class="art-grid" id="art-grid">
+        <p class="list-msg">作品を読み込んでいます…</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- 絞り込み -->
+  <div class="sheet" id="filter-sheet" role="dialog" aria-modal="true" aria-labelledby="filter-title" hidden>
+    <div class="sheet-card">
+      <div class="sheet-head">
+        <h2 id="filter-title">絞り込み</h2>
+        <button type="button" class="icon-btn" data-close aria-label="閉じる">×</button>
+      </div>
+      <h3 class="sheet-label">災害の種類</h3>
+      <div class="chip-row" id="cat-chips">
+        <button type="button" class="chip active" data-cat="all">すべて</button>
+        <button type="button" class="chip" data-cat="mizu"><span class="dot" style="background:#2F80C4"></span>水害</button>
+        <button type="button" class="chip" data-cat="jiban"><span class="dot" style="background:#B5793A"></span>土砂災害</button>
+        <button type="button" class="chip" data-cat="jishin"><span class="dot" style="background:#E0574A"></span>地震</button>
+      </div>
+      <h3 class="sheet-label">いつの行動か</h3>
+      <div class="chip-row" id="phase-chips">
+        <button type="button" class="chip active" data-phase="all">すべて</button>
+        <button type="button" class="chip" data-phase="prior">災害の前</button>
+        <button type="button" class="chip" data-phase="during">災害のとき</button>
+        <button type="button" class="chip" data-phase="recovery">災害のあと</button>
+      </div>
+      <div class="sheet-foot">
+        <button type="button" class="btn btn-ghost" id="filter-reset">リセット</button>
+        <button type="button" class="btn btn-primary" data-close>結果を見る</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ハザードマップを重ねる -->
+  <div class="sheet" id="hazard-sheet" role="dialog" aria-modal="true" aria-labelledby="hazard-title" hidden>
+    <div class="sheet-card">
+      <div class="sheet-head">
+        <h2 id="hazard-title">ハザードマップを重ねる</h2>
+        <button type="button" class="icon-btn" data-close aria-label="閉じる">×</button>
+      </div>
+      <p class="sheet-note">国土地理院の「重ねるハザードマップ」を地図に重ねます。</p>
+      <label class="hz-row"><input type="checkbox" data-hz="flood_l2"> 洪水（川があふれる）</label>
+      <label class="hz-row"><input type="checkbox" data-hz="hightide"> 高潮</label>
+      <label class="hz-row"><input type="checkbox" data-hz="kyukei"> 土砂災害（がけ崩れ）</label>
+      <div id="legend"></div>
+      <h3 class="sheet-label">ほかのサイトで見る</h3>
+      <a class="ext-link" id="link-naisui" target="_blank" rel="noopener">内水氾濫（雨水が下水からあふれる）<small>横浜市「わいわい防災マップ」が開きます</small></a>
+      <a class="ext-link" id="link-jishin" target="_blank" rel="noopener">地震の揺れ（震度）<small>横浜市「わいわい防災マップ」が開きます</small></a>
+      <div class="sheet-foot">
+        <button type="button" class="btn btn-primary" data-close>地図を見る</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 最初の画面（はじめて開いたときだけ） -->
+  <div class="sheet sheet-center" id="intro" role="dialog" aria-modal="true" aria-labelledby="intro-title" hidden>
+    <div class="sheet-card intro-card">
+      <h2 id="intro-title">矢上小学校4年2組の防災アート</h2>
+      <p>子どもたちが、学校のまわりのハザードマップを読み、災害のときの行動を考えて、デジタルアートにしました。</p>
+      <p>作品は3つの場所ごとに並んでいます。<strong>番号（例 4201）</strong>で、お子さまの作品を探せます。</p>
+      <div class="intro-ws" data-ws hidden>
+        <p class="intro-ws-label">ワークショップのお知らせ</p>
+        <p class="intro-ws-title"><span data-ws-field="date"></span>「<span data-ws-field="title"></span>」</p>
+        <p>この作品のような防災アートを、親子で一緒につくってみませんか？</p>
+      </div>
+      <div class="intro-actions">
+        <button type="button" class="btn btn-primary btn-lg" id="intro-close">マップを見る</button>
+        <a class="btn btn-secondary" href="workshop.html" id="intro-ws" data-ws hidden>WSの詳細を見る</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/vendor/leaflet/leaflet.js"></script>
+  <script src="js/common.js?v=1"></script>
+  <script src="js/map.js?v=1"></script>
+</body>
+</html>

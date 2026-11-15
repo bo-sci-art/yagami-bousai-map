@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ワークショップのご案内 | 矢上小 防災行動マップ</title>
+  <meta name="theme-color" content="#ffffff">
+  <link rel="stylesheet" href="css/app.css?v=1">
+</head>
+<body class="page-ws">
+
+  <header class="app-header">
+    <a class="back-link" id="back-link" href="index.html">＜ マップに戻る</a>
+    <a class="icon-btn" id="close-link" href="index.html" aria-label="閉じる">×</a>
+  </header>
+
+  <main class="ws-page">
+    <p class="list-msg" id="ws-msg">読み込んでいます…</p>
+
+    <article id="ws" hidden>
+      <p class="ws-kicker">ワークショップのご案内</p>
+      <h1 class="ws-title" id="ws-title"></h1>
+      <p class="ws-summary" id="ws-summary"></p>
+
+      <section class="card">
+        <h2 class="card-head">日時と会場</h2>
+        <p class="ws-date" id="ws-date"></p>
+        <ol class="ws-sessions" id="ws-sessions"></ol>
+        <p class="ws-note" id="ws-session-note"></p>
+      </section>
+
+      <div class="ws-apply" id="ws-apply">
+        <a class="btn btn-primary btn-xl" id="ws-form" target="_blank" rel="noopener">申し込む</a>
+        <p class="ws-apply-note" id="ws-apply-note"></p>
+      </div>
+
+      <section class="card">
+        <h2 class="card-head">くわしく</h2>
+        <dl class="facts ws-facts" id="ws-facts"></dl>
+      </section>
+
+      <figure class="ws-flyer" id="ws-flyer" hidden>
+        <a id="ws-flyer-link" target="_blank" rel="noopener"><img id="ws-flyer-img" alt="ワークショップのチラシ" loading="lazy"></a>
+        <figcaption>チラシ（タップすると大きく表示します）</figcaption>
+      </figure>
+
+      <p class="ws-back"><a class="btn btn-secondary" href="index.html">マップに戻る</a></p>
+    </article>
+  </main>
+
+  <script src="js/common.js?v=1"></script>
+  <script src="js/workshop.js?v=1"></script>
+</body>
+</html>
